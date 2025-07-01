@@ -14,7 +14,10 @@ const nextDaysConteiners = document.querySelectorAll(
 )
 
 searchInput.addEventListener('input', fetchWeatherData)
-submitBtn.addEventListener('click', fetchWeatherData)
+submitBtn.addEventListener('click', function (e) {
+  e.preventDefault()
+  fetchWeatherData()
+})
 
 // Array of month and day names for formatting date based on index
 const monthNames = [
@@ -42,8 +45,7 @@ const dayNames = [
   'Saturday',
 ]
 
-async function fetchWeatherData(e) {
-  if (e) e.preventDefault()
+async function fetchWeatherData() {
   var searchValue = searchInput.value.trim() || 'cairo'
   var URL = `http://api.weatherapi.com/v1/forecast.json?key=${api_key}&q=${searchValue}&days=3`
 
@@ -54,6 +56,8 @@ async function fetchWeatherData(e) {
         throw new Error('Network response was not ok')
       }
       var data = await response.json()
+
+      console.log(data)
 
       displayToday(data)
       displayNextDays(data)
@@ -202,5 +206,5 @@ function formatDate(dateString) {
 }
 
 window.addEventListener('load', function () {
-  fetchWeatherData(null)
+  fetchWeatherData()
 })
