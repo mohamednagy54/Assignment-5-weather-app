@@ -19,6 +19,10 @@ submitBtn.addEventListener('click', function (e) {
   fetchWeatherData()
 })
 
+window.addEventListener('load', function () {
+  fetchWeatherData()
+})
+
 // Array of month and day names for formatting date based on index
 const monthNames = [
   'January',
@@ -101,6 +105,9 @@ function displayToday(data) {
   const { name: countryName, localtime: date } = data.location
   const {
     temp_c: currentTemp,
+    wind_kph: windSpeed,
+    humidity: humidity,
+    wind_dir: windDirection,
     condition: { text: conditionText, icon: conditionImg },
   } = data.current
 
@@ -131,15 +138,15 @@ function displayToday(data) {
               <div class="info d-flex align-items-center gap-4">
                 <div>
                   <img src="images/icon-umberella.png" alt="">
-                  20%
+                  ${humidity}%
                 </div>
                 <div>
                   <img src="images/icon-wind.png" alt="">
-                  18km/h
+                  ${windSpeed}km/h
                 </div>
                 <div>
                   <img src="images/icon-compass.png" alt="">
-                  East
+                  ${windDirection}
                 </div>
               </div>
 
@@ -204,7 +211,3 @@ function formatDate(dateString) {
     dayName: dayName,
   }
 }
-
-window.addEventListener('load', function () {
-  fetchWeatherData()
-})
